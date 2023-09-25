@@ -145,9 +145,10 @@ jobs:
           sudo chmod -R a+x vendor
         working-directory: neofs-dev-env
 
-      - name: Add pytest-timeout to requirements
+      - name: Modify venv patch
         run: |
-          echo "pytest-timeout==2.1.0" >> requirements.txt
+          sed -i "/# Unset exported dev-env variables/,/popd/d" build_assets/activate.patch
+          sed -i "s/30\,15/30\,11/" build_assets/activate.patch
         working-directory: neofs-testcases
 
       - name: Prepare venv
